@@ -1,5 +1,5 @@
 <script>
-  let viewIsSet = true;
+  let viewIsSet = false;
 </script>
 
 <svelte:head>

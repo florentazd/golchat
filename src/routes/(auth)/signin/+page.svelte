@@ -1,12 +1,47 @@
 <script lang="ts">
+  import { enhance } from "$app/forms";
   import type { PageData } from "./$types";
-
-  export let data: PageData;
+  import { fly } from "svelte/transition";
+  import { redirect } from "@sveltejs/kit";
+  import { goto } from "$app/navigation";
+  let errorNotif: boolean = false;
+  let guest = {
+    email: null,
+    password: null,
+  };
 </script>
+
+{#if errorNotif}
+  <div
+    transition:fly={{ x: -200, duration: 1000 }}
+    class="toast toast-top toast-start"
+  >
+    <div class="alert alert-error">
+      <div>
+        <span class="text-[#fff]">Adresse email ou mot de passe incorrect.</span
+        >
+      </div>
+    </div>
+  </div>
+{/if}
 
 <div id="wp-container" class="h-hull bg-[#fff] flex flex-col justify-center">
   <h3 class="text-2xl font-bold py-4 pl-5">Connexion au compte</h3>
-  <form action="" class="w-full p-5 pt-0 flex flex-col items-center gap-1">
+  <form
+    method="POST"
+    class="w-full p-5 pt-0 flex flex-col items-center gap-1"
+    use:enhance={() => {
+      return async ({ result }) => {
+        if (result.type == "invalid") {
+          errorNotif = true;
+          setTimeout(() => (errorNotif = false), 5000);
+        }
+        if (result.type == "success") {
+          goto("/messages");
+        }
+      };
+    }}
+  >
     <!-- Email -->
     <div class="form-control w-full">
       <label class="label">
@@ -17,7 +52,9 @@
       <input
         autocomplete="username"
         type="text"
+        name="email"
         placeholder="jean.djossou@chat.com"
+        bind:value={guest.email}
         class="input input-bordered w-full  bg-[#F7F7F8]"
       />
       <label class="label">
@@ -33,7 +70,9 @@
       <input
         autocomplete="current-password"
         type="password"
+        name="password"
         placeholder="********"
+        bind:value={guest.password}
         class="input input-bordered w-full  bg-[#F7F7F8]"
       />
       <label class="label">
