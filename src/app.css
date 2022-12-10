@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+        font-family: "Poppins";
+        src: url("/fonts/Poppins-Regular.ttf");
+}
+
+*{
+    font-family: Poppins;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
