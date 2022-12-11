@@ -1,7 +1,7 @@
 <script lang="ts">
-  let viewIsSet = false;
+  let viewIsSet = true;
   export let data;
-  let discussions: [] = null;
+  let discussions: [] = ["1", "1", "1", "1"];
 </script>
 
 <svelte:head>
