@@ -1,5 +1,7 @@
-<script>
+<script lang="ts">
   let viewIsSet = false;
+  export let data;
+  let discussions: [] = null;
 </script>
 
 <svelte:head>
@@ -10,9 +12,9 @@
   id="messages-container"
   class="w-full max-h-screen grid grid-cols-[320px,1fr]"
 >
-  <div id="chat-container" class="h-screen bg-[#FAFAFA] ">
+  <div id="chat-container" class="h-screen bg-[#fff] border-x-2">
     <!--  -->
-    <div class="chats-search-container p-4 bg-[#FAFAFA] shadow-sm">
+    <div class="chats-search-container p-4 bg-[#fff] shadow-sm">
       <input
         type="text"
         placeholder="Rechercher un discussion..."
@@ -20,51 +22,54 @@
       />
     </div>
     <div
-      class="chats-list-container max-h-full overflow-y-auto overflow-x-hidden"
+      class="chats-list-container  max-h-full overflow-y-auto overflow-x-hidden"
     >
       <!-- Le conteneur de la liste de chat disponible  -->
-      {#each Array(21) as _}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div
-          on:click={() => (viewIsSet = !viewIsSet)}
-          class="grid grid-cols-[80px,1fr] h-[86px] cursor-pointer hover:bg-slate-100 border-b-[1px] border-slate-100"
-        >
+      {#if discussions}
+        {#each discussions as discussion}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            id="profile-photo-container"
-            class="flex items-center justify-center"
+            on:click={() => (viewIsSet = !viewIsSet)}
+            class="grid grid-cols-[80px,1fr] h-[86px] cursor-pointer hover:bg-slate-100 border-b-[1px] border-slate-100"
           >
             <div
-              class="h-[56px] w-[56px] rounded-full flex items-center justify-center"
+              id="profile-photo-container"
+              class="flex items-center justify-center"
             >
-              <img
-                src="https://avatars.githubusercontent.com/u/76594818?v=4"
-                alt=""
-                class="rounded-full object-cover"
-              />
+              <div
+                class="h-[56px] w-[56px] rounded-full flex items-center justify-center"
+              >
+                <img
+                  src="https://avatars.githubusercontent.com/u/76594818?v=4"
+                  alt=""
+                  class="rounded-full object-cover"
+                />
+              </div>
+            </div>
+            <div
+              id="chat-details-container"
+              class="grid grid-rows-[1fr,1fr] pr-[10px]"
+            >
+              <div class="flex items-end justify-between">
+                <span class="font-semibold text-base">Paul arthur</span>
+                <span class="text-xs bottom-1 relative text-[#A4A4A4]"
+                  >12/12/12 à 12:30</span
+                >
+              </div>
+              <div class="flex items-start">
+                <span class="text-sm text-[#7A858C]"
+                  >Je suis en bas de chez toi actu...</span
+                >
+              </div>
             </div>
           </div>
-          <div
-            id="chat-details-container"
-            class="grid grid-rows-[1fr,1fr] pr-[10px]"
-          >
-            <div class="flex items-end justify-between">
-              <span class="font-semibold text-base">Paul arthur</span>
-              <span class="text-xs bottom-1 relative text-[#A4A4A4]"
-                >12/12/12 à 12:30</span
-              >
-            </div>
-            <div class="flex items-start">
-              <span class="text-sm text-[#7A858C]"
-                >Je suis en bas de chez toi actu...</span
-              >
-            </div>
-          </div>
-        </div>
-      {/each}
-      <!-- Un chat de l'app -->
-      <!-- <i class="text-sm text-center w-full block pt-5 text-[#A4A4A4]"
-        >Aucune disucssion pour le moment</i
-      > -->
+        {/each}
+      {:else}
+        <!-- Un chat de l'app -->
+        <i class="text-sm text-center w-full block pt-5 text-[#A4A4A4]"
+          >Aucune disucssion pour le moment</i
+        >
+      {/if}
     </div>
   </div>
   <!--  -->
@@ -74,7 +79,9 @@
       id="view-container"
       class="grid grid-rows-[80px,1fr,80px] w-full bg-[#fff]"
     >
-      <div class="h-20 p-4 bg-[#fff] shadow-sm flex justify-between px-8">
+      <div
+        class="h-20 p-4 bg-[#FAFAFA] shadow-sm flex justify-between px-8 border-b-2"
+      >
         <div class="name-status-container grid grid-rows-[3fr,1fr]">
           <span class="font-semibold text-base">George Washington</span>
           <span class="text-sm text-[#A4A4A4]">En ligne</span>
@@ -116,7 +123,7 @@
       <!--  -->
       <div
         id="view"
-        class="bg-slate-100 p-4 max-h-full overflow-y-scroll h-[calc(100vh-160px)]"
+        class="bg-[#FAFAFA] p-4 max-h-full overflow-y-scroll h-[calc(100vh-160px)]"
       >
         <!-- Chat content -->
         {#each Array(20) as _}
@@ -130,9 +137,10 @@
               Obi-Wan Kenobi
               <time class="text-xs opacity-50">12:45</time>
             </div>
-            <div class="chat-bubble">You were the Chosen One!</div>
+            <div class="chat-bubble bg-[#9a9aa9]">You were the Chosen One!</div>
             <div class="chat-footer opacity-50">Delivered</div>
           </div>
+          <!--  -->
           <div class="chat chat-end">
             <div class="chat-image avatar">
               <div class="w-10 rounded-full">
@@ -143,14 +151,14 @@
               Anakin
               <time class="text-xs opacity-50">12:46</time>
             </div>
-            <div class="chat-bubble">I hate you!</div>
+            <div class="chat-bubble bg-[#605bff]">I hate you!</div>
             <div class="chat-footer opacity-50">Seen at 12:46</div>
           </div>
         {/each}
       </div>
       <!--  -->
       <div
-        class="form-container h-20 items-center px-8 grid grid-cols-[40px,1fr]"
+        class="border-t-2 bg-[#FAFAFA] form-container h-20 items-center px-8 grid grid-cols-[40px,1fr]"
       >
         <div id="emoji-container" class="cursor-pointer">
           <svg
@@ -168,9 +176,9 @@
             />
           </svg>
         </div>
-        <form action="" class="items-center grid grid-cols-[1fr,40px,60px]">
+        <form action="" class="items-center grid grid-cols-[1fr,40px,60px] ">
           <textarea
-            class="h-full w-full px-2 text-lg outline-none resize-none placeholder:relative placeholder:top-3 focus:placeholder:top-0 transition-all duration-1000"
+            class="h-full w-full px-2 text-lg outline-none resize-none placeholder:relative placeholder:top-3 focus:placeholder:top-0 transition-all duration-1000 bg-[#FAFAFA]"
             placeholder="Entrer votre message..."
             name=""
             id=""
@@ -198,7 +206,7 @@
           <!--  -->
 
           <div
-            class="rounded-full flex justify-center  items-center h-12 cursor-pointer bg-[#ea4b4b] text-[#fff]"
+            class="rounded-full flex justify-center  items-center h-12 cursor-pointer bg-[#605bff] text-[#fff]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -4,21 +4,26 @@
 </script>
 
 <section id="home" class="flex h-full w-full">
-  <div class="w-16 pt-5 h-full bg-[#181F2E] flex flex-col gap-16">
-    <div class="h-16 w-full avatar flex items-center justify-center online">
-      <div class="h-[50px] w-[50px] rounded-full">
-        <a href="/profile">
+  <div class="w-16 pt-5 h-full bg-[#605bff] flex flex-col gap-16">
+    <div class="h-16 w-full avatar flex items-center justify-center">
+      <div class="h-[50px] w-[50px] rounded-full ring ring-white">
+        <label for="profile">
           <img
             class="h-full w-full cursor-pointer"
             src="https://avatars.githubusercontent.com/u/76594818?v=4"
             alt="profile"
           />
-        </a>
+        </label>
       </div>
     </div>
-    <ul class="menu text-[#fff] w-16 pt-2 flex items-center gap-y-3">
-      <li class:active={$page.url.pathname == "/messages"}>
-        <a href="/messages">
+    <ul
+      class="menu text-[#fff] w-16 pt-2 grid grid-rows-3 justify-center items-center gap-y-4"
+    >
+      <li class:active={$page.url.pathname == "/messages"} class="rounded-xl">
+        <a
+          href="/messages"
+          class="focus:bg-transparent active:bg-transparent hover:bg-transparent"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -36,9 +41,12 @@
         </a>
       </li>
       <!--  -->
-      <li>
+      <li class:active={$page.url.pathname == "/contacts"} class="rounded-xl ">
         <!-- svelte-ignore a11y-missing-attribute -->
-        <a>
+        <a
+          href="/contacts"
+          class="focus:bg-transparent active:bg-transparent hover:bg-transparent"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -50,14 +58,17 @@
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+              d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
             />
           </svg>
         </a>
       </li>
       <!--  -->
-      <li>
-        <a>
+      <li class:active={$page.url.pathname == "/add"} class="rounded-xl ">
+        <a
+          href="/add"
+          class="focus:bg-transparent active:bg-transparent hover:bg-transparent"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -69,7 +80,7 @@
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5"
             />
           </svg>
         </a>
@@ -79,7 +90,7 @@
     <form
       method="POST"
       action="/signout"
-      class="absolute h-16 w-16 bottom-0 text-[#ea4b4b] flex items-center justify-center"
+      class="absolute h-16 w-16 bottom-0 text-[#fff] flex items-center justify-center"
     >
       <button type="submit">
         <svg
@@ -105,12 +116,28 @@
   </div>
 </section>
 
+<!-- modal profile -->
+<input type="checkbox" id="profile" class="modal-toggle" />
+<label for="profile" class="modal cursor-pointer">
+  <div
+    class="modal-box relative h-[540px] grid grid-rows-[40px,1fr,60px] p-4 cursor-default"
+  >
+    <h3 class="flex items-center font-medium text-xl">Mon profile</h3>
+    <form action="" method="post" class="grid grid-rows-[100px,60px,60px,60px]">
+      <div class="w-full flex  justify-center items-center">
+        <img src="" class="h-[100px] w-[100px] rounded-full" alt="" />
+      </div>
+    </form>
+  </div>
+</label>
+
 <style>
   section {
     display: grid;
     grid-template-columns: 64px 1fr;
   }
   .active {
-    color: #ea4b4b;
+    color: #202020;
+    background-color: #fff;
   }
 </style>
