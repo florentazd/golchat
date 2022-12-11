@@ -20,6 +20,7 @@ Creation d'une application de messageire bureau
 ![messages](/public/messages.png)
 
 ### Technos Utilisées
-    * SvelteKit
-    * TailwindCSS
-    * Tauri
+
+- SvelteKit
+- TailwindCSS
+- Tauri
