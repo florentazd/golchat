@@ -1,9 +1,14 @@
-import { invalid } from '@sveltejs/kit';
+import { invalid, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import pbClient from '$lib/pbClient';
+
+export const load: PageServerLoad = async ({ locals }) => {
+    if (locals.pb.authStore.isValid) {
+        throw redirect(303, "/messages")
+    }
+}
 
 export const actions: Actions = {
-    default: async ({ request }) => {
+    default: async ({ request, locals }) => {
         const data = await request.formData()
 
         const newUser = {
@@ -15,7 +20,7 @@ export const actions: Actions = {
             "passwordConfirm": data.get("password")
         }
         try {
-            const record = await pbClient.collection("users").create(newUser)
+            const record = await locals.pb.collection("users").create(newUser)
             return { success: true }
         } catch {
             return invalid(400, {

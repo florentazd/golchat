@@ -29,6 +29,7 @@
   <h3 class="text-2xl font-bold py-4 pl-5">Connexion au compte</h3>
   <form
     method="POST"
+    action="?/signin"
     class="w-full p-5 pt-0 flex flex-col items-center gap-1"
     use:enhance={() => {
       return async ({ result }) => {
