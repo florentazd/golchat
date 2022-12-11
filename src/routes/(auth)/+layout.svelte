@@ -7,7 +7,6 @@
   export let data: LayoutData;
 </script>
 
-<!-- <Toaster /> -->
 <div class="h-full w-full grid grid-cols-[1fr,448px]">
   <div
     id="form-container"

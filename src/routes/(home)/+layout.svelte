@@ -78,7 +78,7 @@
 
     <form
       method="POST"
-      action="signin/?signout"
+      action="/signout"
       class="absolute h-16 w-16 bottom-0 text-[#ea4b4b] flex items-center justify-center"
     >
       <button type="submit">
